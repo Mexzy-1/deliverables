@@ -1,0 +1,30 @@
+---
+title: "HW 02"
+subtitle: "Due Thursday, October 15, 11:59 PM"
+author: "Your name here!"
+output: pdf_document
+---
+
+```{r load-packages-data, warning=FALSE, message=FALSE}
+
+```
+
+### Exercise 1
+
+```{r ex-1}
+
+```
+
+### Exercise 2
+
+```{r ex-2}
+
+```
+
+### Exercise 3
+
+```{r ex-3}
+
+```
+
+and so on.
