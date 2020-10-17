@@ -1,29 +1,115 @@
 ---
 title: "HW 02"
 subtitle: "Due Thursday, October 15, 11:59 PM"
-author: "Your name here!"
+author: "Matthew Xiao!"
 output: pdf_document
 ---
 
 ```{r load-packages-data, warning=FALSE, message=FALSE}
-
+library(tidyverse)
+licorice <- read_csv("data/licorice.csv") 
 ```
 
 ### Exercise 1
 
 ```{r ex-1}
+c_licorice <- licorice %>% filter(!is.na(pacu30min_throatPain))
+
+n_sims <- 1000
+set.seed(1)
+boot_dist = numeric(n_sims)
+
+for (i in 1:n_sims){
+  set.seed(i)
+  indices <- sample(1:nrow(c_licorice), replace = TRUE)
+  boot_mean <- c_licorice %>%
+    slice(indices) %>%
+    summarize(boot_meean = mean(pacu30min_throatPain)) %>% pull()
+  boot_dist[i] = boot_mean
+  
+  
+  
+}
+boot_means <- tibble(boot_dist)
+boot_means %>% summarize(lower = quantile(boot_dist, 0.025),
+                         upper = quantile(boot_dist, 0.975))
+
 
 ```
 
 ### Exercise 2
 
 ```{r ex-2}
+licorice
 
+set.seed(2)
+n_sims <- 900
+
+boot_dist = numeric(n_sims) 
+for(i in 1:n_sims){ 
+  set.seed(i) 
+  indices <- sample(1:nrow(licorice), replace = T)
+  boot_mean <- licorice %>%
+    slice(indices) %>%                    
+    summarize(boot_mean = mean(preOp_calcBMI)) %>% 
+    pull()
+  
+  boot_dist[i] <- boot_mean 
+} 
+mu_0 = 26
+
+boot_means <- tibble(boot_dist)
+
+boot_means %>% 
+  summarize(unshifted_mean_HNR = mean(boot_dist))
+
+offset <- boot_means %>% 
+  summarize(mu_0 - mean(boot_dist)) %>%
+  pull()
+
+boot_means <- boot_means %>%
+  mutate(shifted_means = boot_dist + offset)
+
+ggplot(data = boot_means, aes(x = shifted_means)) +
+  geom_histogram(binwidth = 0.1, color = "darkblue", fill = "skyblue") + 
+  labs(x = "Mean of BMI", 
+       y = "Count",
+       title = "The graph displays the null distribution for 
+       the mean BMI of the Preoperation Patients with the asumption that the 
+       mean BMI is 26.") +
+  geom_vline(xintercept = 26, lwd = 2, color = "red") +
+  geom_vline(xintercept = quantile(boot_means$shifted_means, 0.025), 
+             lwd = 2, 
+             color = "black") +
+  geom_vline(xintercept = quantile(boot_means$shifted_means, 0.975),
+             lwd= 2,
+             color = "black")
+
+boot_means %>% 
+  summarize(lower = quantile(shifted_means, 0.025),
+            upper = quantile(shifted_means, 0.975))
 ```
 
 ### Exercise 3
 
 ```{r ex-3}
+
+B_pain <- licorice %>% 
+  mutate(asapain = ifelse(pacu30min_throatPain >0, 1, 0)) 
+
+
+t.test(B_pain$preOp_asa ~ asapain, 
+       data = B_pain,
+       mu = 0,
+       var.equal = FALSE,
+       alternative = "two.sided",
+       conf.level = 0.95)
+
+
+
+
+
+
 
 ```
 
