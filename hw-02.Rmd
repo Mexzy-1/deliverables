@@ -143,9 +143,9 @@ t.test(pacu30min_throatPain ~ treat,
 set.seed(5)
 cc_licorice <- c_licorice %>% 
   mutate(pain = ifelse(pacu30min_throatPain >0 | pacu30min_swallowPain >0, 1, 0)) 
-licorice_l <- cc_licorice %>% 
-  filter(treat == 0 ) 
 sugar <- cc_licorice %>% 
+  filter(treat == 0 ) 
+licorice_l <- cc_licorice %>% 
   filter(treat == 1 )
 n_sims <- 2000
 boot_diffs <- numeric(n_sims)
@@ -153,15 +153,15 @@ boot_diffs <- numeric(n_sims)
 
 for(i in 1:n_sims){
   # create indices
-  indices_h <- sample(1:nrow(licorice_l), replace = T)
-  indices_p <- sample(1:nrow(sugar), replace = T)
+  indices_h <- sample(1:nrow(sugar), replace = T)
+  indices_p <- sample(1:nrow(licorice_l), replace = T)
   # bootstrap est. group means
-  temp_h <- licorice_l %>% 
+  temp_h <- sugar %>% 
     slice(indices_h) %>% 
     summarize(mean1 = mean(pain)) %>% 
     select(mean1) %>% 
     pull()
-  temp_p <- sugar %>% 
+  temp_p <- licorice_l %>% 
     slice(indices_p) %>% 
     summarize(mean_jitter = mean(pain)) %>% 
     select(mean_jitter) %>% 
