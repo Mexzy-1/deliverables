@@ -36,6 +36,21 @@ boot_means %>% summarize(Lower = quantile(boot_dist, 0.025),
   knitr::kable()
 t.test(c_licorice$pacu30min_throatPain, conf.level = .95)
 ```
+Both the clt- based apprach and the simulation approach created similar bounds 
+of around .49 for the lower bound and .81 for the upper bounds. 
+The bounds for the simulation approach are slightly smaller as the lower 
+bound is slightly higher as well as the upper bound is as well. In both cases 
+the 95% constructed region creates bounds of the pain level of .487 to .809. 
+If we would randomly sample the patient data for throat pain, following the same
+approach we would be 95% confident that 95% of the new constructed confidence
+intervals to encompass the true mean. 
+
+
+
+
+
+
+
 
 ### Exercise 2
 
@@ -100,6 +115,15 @@ boot_means1 %>% knitr::kable()
 
 ```
 
+Based on the simulated data. It seems as if that the probability that the mean
+of sampled patients' BMI have a 25.59 or more extreme BMI is 14.4%. This is 
+above the general pvalue of .05 which means that we have insufficient evidence 
+to reject the null hypothesis (that the BMI of patients is the same as the rest 
+of the German population. )
+
+
+
+
 ### Exercise 3
 
 ```{r ex-3}
@@ -135,6 +159,14 @@ t.test(pacu30min_throatPain ~ treat,
 
 
 ```
+
+Those that were treated with sugar (treat 0) had a higher incidence of having 
+throat pain 30 after. We recieved a pvalue of 1.8e-06 which is much smaller than 
+0.05 thus we can reject the null hypothesis and state that we have evidence that
+licorice decreases the incidence of having throat pain 30 min after the
+operation.
+
+
 
 
 ### Exercise 5
@@ -189,14 +221,19 @@ null_dist %>%
 ```
 
 
-
+The pvalue created is 0.0055 which is much smaller than the alpha level of 0.05.
+thus we have evidence that to reject the null hypthesis and conclude that those
+who take licorice in general will less likley have pain 30 minutes after. 
 
 
 
 ### Exercise 6
 
-
-
+We do  have enough evidence. we only know that 30 minutes after that a licorice
+gargle will reduce pain. However we can not tell if that hold true 90 minutes or
+4 hours or at 1 am. That would require further extrapolation of the data in which 
+then we can conclude with the data we collected that a licorice gargle will 
+reduce the pain that a patient felt in general. 
 
 ### Exercise 7
 TRUE
