@@ -48,17 +48,9 @@ approach we would be 95% confident that 95% of the new constructed confidence
 intervals to encompass the true mean. 
 
 
-
-
-
-
-
-
-
-
 ### Exercise 2
 
-$\alpha$ = 0.05
+significance level: $\alpha$ = 0.05
 $H_0$ : $\mu$ = 26
 $H_A$ : $\mu$ $\neq$ 26
 
@@ -150,7 +142,7 @@ patients have a different than the German population.
 
 
 ### Exercise 3
-$\alpha$ = 0.05
+significance level:$\alpha$ = 0.05
 $H_0$: Throat pain 30 minutes after and ASA classification are independent; 
   there is no association between them
 $H_1$: Throat pain 30 minutes after and ASA classification are not independent; 
@@ -163,12 +155,6 @@ B_pain <- c_licorice %>%
 
 
 chisq.test(table(B_pain$asapain, B_pain$preOp_asa))
-
-
-
-
-
-
 
 ```
 The distribution of the test statistic under the null distribution is a 
@@ -187,8 +173,10 @@ classification
 ### Exercise 4
 
 $\alpha$ = 0.05
-$\mu_s$ : mean throat pain for those with the sugar placebo
-$\mu_l$ : mean throat pain for those with the licorice
+$\mu_s$ : mean throat pain 30 minutes level after the operation for those with the 
+sugar placebo
+$\mu_l$ : mean throat pain level 30 minutes after the operation for those with 
+the licorice
 $H_0$: Gargling licorice does not affect the mean throat pain of patients
 $H_0$ : $\mu_s$ = $\mu_l$
 
@@ -203,7 +191,6 @@ t.test(pacu30min_throatPain ~ treat,
        var.equal = FALSE,
        alternative = "greater",
        conf.level = 0.95)
-
 
 ```
 
@@ -233,6 +220,16 @@ decreases the mean throat pain after 30 after a licorice gargle.
 
 
 ### Exercise 5
+
+significance level:$\alpha$ = 0.05
+$\mu_s$ : mean pain 30 minutes probability after for those with the sugar placebo
+$\mu_l$ : mean pain 30 minutes probability after for those with the licorice
+$H_0$: Gargling licorice does not affect the mean throat pain of patients
+$H_0$ : $\mu_s$ = $\mu_l$
+
+$H_A$: Gargling licorice decreases the the mean throat pain of patients
+$H_A$ : $\mu_s$ > $\mu_l$
+
 
 ```{r ex-5}
 set.seed(5)
@@ -343,7 +340,6 @@ of those intervals would truly contain the true population difference in means.
 ### Exercise 11
 
 True - the variance is already in the confidence interval
-
 
 ### Exercise 12
 
